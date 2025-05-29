@@ -1,13 +1,28 @@
+/// Configuration management via environment variables
 use std::collections::HashMap;
 use std::env;
 
+/// Application configuration loaded from environment variables
+///
+/// This structure holds all the configuration needed to run the application,
+/// including sensor definitions and database connection details.
 #[derive(Debug, Clone)]
 pub struct SensorConfig {
+    /// Map of sensor MAC addresses to human-readable names
+    /// Key: MAC address (uppercase), Value: sensor name
     pub tags: HashMap<String, String>,
+    /// PostgreSQL connection string with SSL parameters
     pub database_url: String,
 }
 
 impl SensorConfig {
+    /// Load configuration from environment variables
+    ///
+    /// Supports two configuration formats:
+    /// 1. RUUVI_TAGS="MAC1=Name1,MAC2=Name2" (preferred)
+    /// 2. Individual RUUVI_TAG_N_MAC and RUUVI_TAG_N_NAME variables (legacy)
+    ///
+    /// Also requires DATABASE_URL with PostgreSQL connection string.
     pub fn new() -> Result<Self, Box<dyn std::error::Error>> {
         // Load environment variables
         dotenv::dotenv().ok();
@@ -59,6 +74,7 @@ impl SensorConfig {
             println!("Tag: {} -> {}", mac, name);
         }
 
+        // Ensure at least one sensor is configured
         if tags.is_empty() {
             return Err("No RuuviTag sensors configured. Please set RUUVI_TAGS or RUUVI_TAG_<N>_MAC/RUUVI_TAG_<N>_NAME environment variables".into());
         }
