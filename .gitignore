@@ -9,4 +9,8 @@ target/
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
+# ignore Cargo.lock
 *.lock
+
+#ignore macOS .DS_Store
+.DS_Store
