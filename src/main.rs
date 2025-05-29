@@ -31,7 +31,7 @@ async fn main_loop(config: SensorConfig) -> Result<(), Box<dyn std::error::Error
             format_datetime(&start_time)
         );
 
-        // Collect data for COLLECTION_INTERVAL_SECS seconds (30 minutes)
+        // Collect data for COLLECTION_INTERVAL_SECS
         loop {
             let elapsed = duration_to_seconds(OffsetDateTime::now_utc() - start_time);
             if elapsed >= COLLECTION_INTERVAL_SECS {
