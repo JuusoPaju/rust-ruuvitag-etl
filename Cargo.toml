@@ -1,17 +1,28 @@
+# Project dependencies and metadata
 [package]
-name = "sensor-data-etl"
+name = "rust-ruuvitag-etl"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.0", features = ["full"] }
-tokio-postgres = { version = "0.7", features = ["with-time-0_3"] }
-postgres-openssl = "0.5"
-openssl = "0.10"
-bluer = { version = "0.17", features = ["bluetoothd", "l2cap"] }
-time = { version = "0.3", features = ["formatting", "parsing"] }
-log = "0.4"
-env_logger = "0.10"
-dotenv = "0.15"
-url = "2.0"
-futures-util = "0.3"
+tokio = { version = "1.0", features = [
+  "full",
+] } # Async runtime with all features
+tokio-postgres = { version = "0.7", features = [
+  "with-time-0_3",
+] } # PostgreSQL async client with time support
+postgres-openssl = "0.5" # OpenSSL support for PostgreSQL
+openssl = "0.10" # OpenSSL bindings
+bluer = { version = "0.17", features = [
+  "bluetoothd",
+  "l2cap",
+] } # Bluetooth LE library for Linux
+time = { version = "0.3", features = [
+  "formatting",
+  "parsing",
+] } # Time and date utilities
+log = "0.4" # Logging facade
+env_logger = "0.10" # Environment-based logger configuration
+dotenv = "0.15" # Load environment variables from .env file
+url = "2.0" # URL parsing for database connection strings
+futures-util = "0.3" # Additional async utilities
