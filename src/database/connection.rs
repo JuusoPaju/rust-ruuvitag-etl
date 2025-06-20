@@ -25,9 +25,14 @@ pub fn create_ssl_connector(sslrootcert_path: &str) -> Result<MakeTlsConnector, 
         .set_ca_file(sslrootcert_path)
         .map_err(|e| format!("Error loading CA cert: {}", e))?;
 
+    // old part that probably didn't implement the SSL correctly.
     // TEMPORARY: Disable certificate verification for self-signed certificates
     // In production, consider using proper certificate validation
-    builder.set_verify(SslVerifyMode::NONE); // TEMPORARY FOR SELF-SIGNED CERTS
+    // builder.set_verify(SslVerifyMode::NONE); // TEMPORARY FOR SELF-SIGNED CERTS
+
+    // Verify the certificate but not the hostname
+    builder.set_verify(SslVerifyMode::PEER);
+    builder.set_verify_hostname(false);
 
     Ok(MakeTlsConnector::new(builder.build()))
 }
